@@ -52,6 +52,10 @@ Before running the project, ensure you have the following tools installed:
      ```python
      url = "http://localhost:11434/api/generate"  # Update if necessary
      ```
+   - **Machine Learning model URL**: Update the place where the model us stored:
+   - Currently it is at : C:/Users/ITBS/Desktop/disease_detection.keras
+   - Change it to where 'disease_detection.keras' file is stored
+     
 ## Methodology
 
 1. Setting up the Flask Application:
