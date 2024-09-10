@@ -1,0 +1,128 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "description": "An API to provide personalized nutritional recommendation.",
+      "version": "1.0.0",
+      "title": "AgriDoctor API"
+    },
+    "host": "127.0.0.1:5000",
+    "basePath": "/",
+    "schemes": [
+      "http"
+    ],
+    "paths": {
+      "/city": {
+        "get": {
+          "summary": "Get the location key for a specified city",
+          "description": "Fetches the location key from AccuWeather API for the specified city.",
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "Location key": {
+                      "type": "string",
+                      "description": "The location key for the city"
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Unsuccessful in hitting API"
+            }
+          }
+        }
+      },
+      "/weather": {
+      "get": {
+        "summary": "Get the current weather conditions",
+        "description": "Fetches the current weather conditions from AccuWeather API using a specific location key.",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "WeatherText": {
+                    "type": "string",
+                    "description": "Description of the current weather"
+                  },
+                  "Temperature": {
+                    "type": "object",
+                    "properties": {
+                      "Metric": {
+                        "type": "object",
+                        "properties": {
+                          "Value": {
+                            "type": "number",
+                            "description": "Temperature value"
+                          },
+                          "Unit": {
+                            "type": "string",
+                            "description": "Temperature unit"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "Data": {
+                    "type": "object",
+                    "description": "Raw weather data returned from the API"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unsuccessful in hitting API"
+          }
+        }
+      }
+    },
+    "/process": {
+      "post": {
+        "summary": "Process an image to detect plant disease and generate recommendations",
+        "description": "Uploads an image file, processes it with a machine learning model to detect disease, and generates recommendations based on the detected disease.",
+        "consumes": [
+          "multipart/form-data",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "file",
+            "in": "formData",
+            "description": "Image file to be processed",
+            "required": true,
+            "type": "file"
+          },
+          {
+            "name": "language",
+            "in": "formData",
+            "description": "Preferred language for the response",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response with disease information and recommendations",
+            "schema": {
+              "type": "string",
+              "description": "Response from the external model API containing recommendations"
+            }
+          },
+          "400": {
+            "description": "Error in processing the request"
+          }
+        }
+      }
+    }
+  }
+}
+  
