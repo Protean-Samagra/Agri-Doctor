@@ -1,4 +1,4 @@
-# Agri Doctor: Agronomy Advice API
+# Agri Doctor: Agronomy Advice API 🍃
 
 This project involves developing robust APIs for an Agronomy application called **Agri Doctor** that leverages AI and Machine Learning on historical data to offer personalized agricultural advice and predictive analytics. The APIs enable features such as disease prediction, fertilizer recommendations and nutrition advice to increase crop yield, with multilingual support for all Indian regional languages.
 
@@ -52,41 +52,46 @@ Before running the project, ensure you have the following tools installed:
      ```python
      url = "http://localhost:11434/api/generate"  # Update if necessary
      ```
-   - **Machine Learning model URL**: Update the place where the model us stored:
+   - **Machine Learning model URL**: Update the place where the model is stored:
    - Currently it is at : C:/Users/ITBS/Desktop/disease_detection.keras
    - Change it to where 'disease_detection.keras' file is stored
      
 ## Methodology
 
 1. Setting up the Flask Application:
-- Start by creating a Flask app, which acts as a web server to handle different HTTP requests.
-- Set up Swagger UI to provide interactive documentation for your API using Flask-RESTful and flask_swagger_ui.
+  - Start by creating a Flask app, which acts as a web server to handle different HTTP requests.
+  - Set up Swagger UI to provide interactive documentation for your API using Flask-RESTful and flask_swagger_ui.
 
 2. City API:
-- The /city endpoint hits an external weather service API (AccuWeather) to retrieve information about the city (in this case, 'Bangalore').
-- The city_url points to the API for fetching city data based on the provided city name.
-- You pass an API key and the city name as parameters (params2), then extract the location_key from the response JSON, which is necessary for retrieving weather information.
+  - The /city endpoint hits an external weather service API (AccuWeather) to retrieve information about the city (in this case, 'Bangalore').
+  - The city_url points to the API for fetching city data based on the provided city name.
+  - You pass an API key and the city name as parameters (params2), then extract the location_key from the response JSON, which is necessary for retrieving weather information.
 
 3. Weather API:
-- The /weather endpoint uses the location_key from the city API to form the resource URL for the weather API.
-- It hits the AccuWeather API again, using location_key to get real-time weather data, including conditions such as weather type, temperature, and units.
-- This weather data is converted from JSON to string format and stored in the weather_prompt variable. This prompt will be passed later for further processing.
+  - The /weather endpoint uses the location_key from the city API to form the resource URL for the weather API.
+  - It hits the AccuWeather API again, using location_key to get real-time weather data, including conditions such as weather type, temperature, and units.
+  - This weather data is converted from JSON to string format and stored in the weather_prompt variable. This prompt will be passed later for further processing.
 
 4. Machine Learning Model Integration:
-- The /processing endpoint allows the user to upload an image file, representing the crop, along with a language preference.
-- The uploaded image is processed using preprocess_image, which resizes and normalizes the image to make it suitable for the ML model.
-- A pre-trained TensorFlow model (loaded from your local machine) is used to predict the crop's disease based on the image.
-- The model predicts the disease by outputting a class index that maps to a list of diseases (disease_class_names). The predicted class is split into crop_type and disease_type.
+  - The /processing endpoint allows the user to upload an image file, representing the crop, along with a language preference.
+  - The uploaded image is processed using preprocess_image, which resizes and normalizes the image to make it suitable for the ML model.
+  - A pre-trained TensorFlow model (loaded from your local machine) is used to predict the crop's disease based on the image.
+  - The model predicts the disease by outputting a class index that maps to a list of diseases (disease_class_names). The predicted class is split into crop_type and disease_type.
 
 5. Creating a Prompt:
-- The weather_prompt (containing the weather information), along with the predicted crop_type and disease_type, is used to generate a prompt.
-- The prompt is designed to simulate asking a plant pathologist for advice, which includes recommendations for fertilizer, chemicals, organic treatments, and practices tailored to the weather conditions.
+  - The weather_prompt (containing the weather information), along with the predicted crop_type and disease_type, is used to generate a prompt.
+  - The prompt is designed to simulate asking a plant pathologist for advice, which includes recommendations for fertilizer, chemicals, organic treatments, and practices tailored to the weather conditions.
 
 6. Passing the Prompt to Ollama:
-- You send this generated prompt to an AI model running on the Ollama server via a POST request.
-- You can use various models. In english the best response is observed by "llama3.1". For Indic languages- "qwen2:1.5b".
-- The response from the model contains the professional advice based on the crop and disease condition, which is returned to the user.
+  - You send this generated prompt to an AI model running on the Ollama server via a POST request.
+  - You can use various models. In english the best response is observed by "llama3.1". For Indic languages- "qwen2:1.5b".
+  - The response from the model contains the professional advice based on the crop and disease condition, which is returned to the user.
 
+## Machine learning model
+  1. Run the model (disease_detction.ipynb)
+  2. Save it as a .keras file
+  3. Use the local location of the .keras file in the app.py file.
+     
 ## Usage
 
 1. Start the Flask application:
