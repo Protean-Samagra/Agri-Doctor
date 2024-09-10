@@ -52,6 +52,36 @@ Before running the project, ensure you have the following tools installed:
      ```python
      url = "http://localhost:11434/api/generate"  # Update if necessary
      ```
+## Methodology
+
+1. Setting up the Flask Application:
+- Start by creating a Flask app, which acts as a web server to handle different HTTP requests.
+- Set up Swagger UI to provide interactive documentation for your API using Flask-RESTful and flask_swagger_ui.
+
+2. City API:
+- The /city endpoint hits an external weather service API (AccuWeather) to retrieve information about the city (in this case, 'Bangalore').
+- The city_url points to the API for fetching city data based on the provided city name.
+- You pass an API key and the city name as parameters (params2), then extract the location_key from the response JSON, which is necessary for retrieving weather information.
+
+3. Weather API:
+- The /weather endpoint uses the location_key from the city API to form the resource URL for the weather API.
+- It hits the AccuWeather API again, using location_key to get real-time weather data, including conditions such as weather type, temperature, and units.
+- This weather data is converted from JSON to string format and stored in the weather_prompt variable. This prompt will be passed later for further processing.
+
+4. Machine Learning Model Integration:
+- The /processing endpoint allows the user to upload an image file, representing the crop, along with a language preference.
+- The uploaded image is processed using preprocess_image, which resizes and normalizes the image to make it suitable for the ML model.
+- A pre-trained TensorFlow model (loaded from your local machine) is used to predict the crop's disease based on the image.
+- The model predicts the disease by outputting a class index that maps to a list of diseases (disease_class_names). The predicted class is split into crop_type and disease_type.
+
+5. Creating a Prompt:
+- The weather_prompt (containing the weather information), along with the predicted crop_type and disease_type, is used to generate a prompt.
+- The prompt is designed to simulate asking a plant pathologist for advice, which includes recommendations for fertilizer, chemicals, organic treatments, and practices tailored to the weather conditions.
+
+6. Passing the Prompt to Ollama:
+- You send this generated prompt to an AI model running on the Ollama server via a POST request.
+- You can use various models. In english the best response is observed by "llama3.1". For Indic languages- "qwen2:1.5b".
+- The response from the model contains the professional advice based on the crop and disease condition, which is returned to the user.
 
 ## Usage
 
