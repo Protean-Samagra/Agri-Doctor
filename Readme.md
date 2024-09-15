@@ -1,14 +1,11 @@
 # Agri Doctor: Agronomy Advice API 🍃
 
-This project involves developing robust APIs for an Agronomy application called **Agri Doctor** that leverages AI and Machine Learning on historical data to offer personalized agricultural advice and predictive analytics. The APIs enable features such as disease prediction, fertilizer recommendations and nutrition advice to increase crop yield, with multilingual support for all Indian regional languages.
-
 ## Project Description
 
-The **Agri Doctor** API suite is designed to support Indian farmers by providing tailored agricultural recommendations using public data and AI/ML models. It aims to assist with disease prediction, seed/fertilizer recommendations, nutrition advice, and yield improvement insights to help farmers make data-driven decisions for better crop health and descreased losses.
+This project involves developing robust APIs for an Agronomy application called **Agri Doctor**. The **Agri Doctor** API suite is designed to support Indian farmers by providing tailored agricultural advice using public data and AI/ML models. It aims to assist with disease prediction, seed/fertilizer recommendations, nutrition advice, and yield improvement insights to help farmers make data-driven decisions for better crop health and descreased losses. 
 
 Key Features:
-- **Crop Prediction API**: Predicts crop type from the image uploaded by the farmer.
-- **Disease Prediction API**: Predicts crop disease from the crop type and image uploaded by the farmer.
+- **Crop and Disease Prediction endpoint**: Predicts crop disease from the crop type and image uploaded by the farmer.
 - **Personalized Agri-Advice API**: Tailored recommendations based on crop type, crop disease and current weather conditions.
 
 ## Prerequisites
@@ -16,7 +13,7 @@ Key Features:
 Before running the project, ensure you have the following tools installed:
 
 - **Python 3.8+**: Required to run the Flask application.
-- **Ollama**: [Install Ollama](https://github.com/ollama/ollama) for advice generation.
+- **Ollama**: [Install Ollama](https://github.com/ollama/ollama) LLM for advice generation.
 - **Postman**: [Download Postman](https://www.postman.com/downloads/) for testing API endpoints.
 - **Swagger UI**: Swagger is already integrated into the project for API documentation. Access it after running the Flask app at:
   ```
@@ -89,7 +86,7 @@ Before running the project, ensure you have the following tools installed:
 
 ## Machine learning model
   1. Run the model (disease_detction.ipynb)
-  2. Save it as a .keras file
+  2. Save it as a .keras file / use the previously saved file
   3. Use the local location of the .keras file in the app.py file.
      
 ## Usage
@@ -105,7 +102,7 @@ Before running the project, ensure you have the following tools installed:
        - Example url: http://127.0.0.1:5000/weather
    - Create a post api: To hit the Machine learning model and Ollama
         - Example url: http://127.0.0.1:5000/processing
-        - Key: file; Value: <image file>
+        - Key: file; Value: <image file> (use the sample images)
         - Key: language; Value: <Language, eg: Hindi, English>
      
 2. Access the Swagger UI for API documentation at:
